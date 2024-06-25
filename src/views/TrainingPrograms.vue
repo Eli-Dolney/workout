@@ -17,9 +17,9 @@
   
   <script setup lang="ts">
   const images = [
-    { src: new URL('../assets/images/work.jpg', import.meta.url).href, alt: 'Training Program 1' },
-    { src: new URL('../assets/images/bro.jpg', import.meta.url).href, alt: 'Training Program 2' },
-    { src: new URL('../assets/images/train.jpg', import.meta.url).href, alt: 'Training Program 3' }
+    { src: new URL('../assets/images/eisleymain.jpg', import.meta.url).href, alt: 'Training Program 1' },
+    { src: new URL('../assets/images/eisleymain.jpg', import.meta.url).href, alt: 'Training Program 2' },
+    { src: new URL('../assets/images/eisleymain.jpg', import.meta.url).href, alt: 'Training Program 3' }
   ];
   </script>
   

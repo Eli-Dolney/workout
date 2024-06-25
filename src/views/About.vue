@@ -12,7 +12,7 @@
         My approach to fitness is holistic, focusing not just on physical training but also on mental well-being and nutrition. Whether you're an athlete looking to enhance your performance or someone new to fitness, I'm here to guide you every step of the way.
       </p>
       <p>
-        Join me on this journey to a healthier, stronger, and happier you. Let's achieve greatness together
+        Join me on this journey to a healthier, stronger, and happier you. Let's achieve greatness together.
       </p>
     </div>
     <div class="about-image">
@@ -22,20 +22,34 @@
 </template>
 
 <script setup lang="ts">
-const imageSrc = new URL('../assets/images/jacked.jpg', import.meta.url).href;
+const imageSrc = new URL('../assets/images/front.jpg', import.meta.url).href;
 </script>
 
 <style scoped>
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #333; /* Dark background */
+  color: #fff; /* White text */
+}
+
+/* Full-width container */
 .about-container {
   display: flex;
-  align-items: center;
+  align-items: stretch; /* Ensure children are the same height */
   justify-content: center;
-  max-width: 1200px;
-  margin: 2rem auto;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  margin: 0 auto;
+  background-color: #000; /* Match the black theme */
 }
 
 .about-text {
@@ -46,12 +60,12 @@ const imageSrc = new URL('../assets/images/jacked.jpg', import.meta.url).href;
 .about-text h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #007bff;
+  color: #ff0000; /* Match the red theme for headings */
 }
 
 .about-text p {
   font-size: 1.2rem;
-  color: #666;
+  color: #ccc; /* Light grey for paragraphs */
   margin-bottom: 1rem;
   line-height: 1.6;
 }
@@ -65,11 +79,13 @@ const imageSrc = new URL('../assets/images/jacked.jpg', import.meta.url).href;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Ensure the image doesn't overflow */
 }
 
 .about-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 </style>

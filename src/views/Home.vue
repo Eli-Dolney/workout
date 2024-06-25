@@ -11,35 +11,48 @@
         <button class="btn-secondary">Watch How It Works</button>
       </div>
     </div>
-    <div class="hero-image">
-      <img :src="imageUrl" alt="EISLEY">
-    </div>
   </div>
 </template>
 
+
 <script setup lang="ts">
-import imageUrl from '../assets/images/jacked.jpg';
+
 </script>
 
 <style scoped>
 .hero {
-  background: linear-gradient(to right, #f5f5f5, #fff);
+  background: url('../assets/images/eisleymain.jpg') no-repeat center center;
+  background-size: cover;
   padding: 4rem 2rem;
   text-align: left;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
 }
 
 .hero-content {
-  max-width: 800px;
+  position: relative;
+  max-width: 1000px;
+  z-index: 1;
 }
 
 .hero h1 {
   font-size: 3rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
+  color: red;
 }
 
 .hero .subtitle {
@@ -57,16 +70,6 @@ import imageUrl from '../assets/images/jacked.jpg';
 .hero-buttons {
   display: flex;
   gap: 1rem;
-}
-
-.hero-image {
-  max-width: 400px;
-  margin-left: 2rem;
-}
-
-.hero-image img {
-  width: 100%;
-  border-radius: 8px;
 }
 
 .btn-primary {
@@ -104,12 +107,6 @@ import imageUrl from '../assets/images/jacked.jpg';
   }
 
   .hero-content {
-    max-width: 100%;
-  }
-
-  .hero-image {
-    margin-left: 0;
-    margin-top: 2rem;
     max-width: 100%;
   }
 
