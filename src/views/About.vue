@@ -26,66 +26,82 @@ const imageSrc = new URL('../assets/images/front.jpg', import.meta.url).href;
 </script>
 
 <style scoped>
-/* Basic Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  font-family: 'Arial', sans-serif;
-  background-color: #333; /* Dark background */
-  color: #fff; /* White text */
-}
-
-/* Full-width container */
+/* Mobile-first approach */
 .about-container {
   display: flex;
-  align-items: stretch; /* Ensure children are the same height */
-  justify-content: center;
-  width: 100%;
-  height: 100vh; /* Full viewport height */
-  margin: 0 auto;
-  background-color: #000; /* Match the black theme */
-}
-
-.about-text {
-  flex: 1;
-  padding: 2rem;
-}
-
-.about-text h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #ff0000; /* Match the red theme for headings */
-}
-
-.about-text p {
-  font-size: 1.2rem;
-  color: #ccc; /* Light grey for paragraphs */
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.about-text p:last-child {
-  margin-bottom: 0;
-}
-
-.about-image {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* Ensure the image doesn't overflow */
+  flex-direction: column-reverse;
+  padding: 1rem;
+  height: auto;
 }
 
 .about-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
+  height: auto;
+  margin-bottom: 1rem;
 }
+
+.about-text h1 {
+  font-size: 2rem;
+}
+
+.about-text p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* For larger screens (tablets, desktops) */
+@media (min-width: 768px) {
+  .about-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    padding: 3rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-text {
+    flex: 1.5;
+    padding-right: 2rem;
+    max-width: 60%; /* Text area width on larger screens */
+  }
+
+  .about-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 40%; /* Image area width on larger screens */
+  }
+
+  .about-image img {
+    width: 100%;
+    height: auto;
+    max-width: 450px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Adding a subtle shadow */
+  }
+}
+
+/* Footer styling (optional for sticking it at the bottom) */
+footer {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
 </style>

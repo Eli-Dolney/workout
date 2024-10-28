@@ -1,23 +1,76 @@
 <template>
-  <div class="hero">
-    <div class="hero-content">
-      <h1>EISLEY</h1>
-      <p class="subtitle">Get Roided out with me</p>
-      <p class="description">
-        I got the best suppliers for sarms, tren and fairlife use code eisleyfit for 40% off at your local plug lol
-      </p>
-      <div class="hero-buttons">
-        <button class="btn-primary">Learn More</button>
-        <button class="btn-secondary">Watch How It Works</button>
+  <div>
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-content">
+        <h1>EISLEY</h1>
+        <p class="subtitle">Get Roided out with me</p>
+        <p class="description">
+          I got the best suppliers for sarms, tren, and fairlife. Use code "eisleyfit" for 40% off at your local plug lol
+        </p>
+        <div class="hero-buttons">
+          <button class="btn-primary">Learn More</button>
+          <button class="btn-secondary">Watch How It Works</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carousel Section -->
+    <div class="carousel-section">
+      <div class="carousel-inner" :style="{ transform: `translateX(-${currentSlide * 100}%)`, '--carousel-image-count': images.length }">
+        <div class="carousel-item" v-for="(image, index) in images" :key="index">
+          <img :src="image" alt="Carousel Image" />
+        </div>
+      </div>
+      <!-- Dots to navigate through images -->
+      <div class="carousel-dots">
+        <span v-for="(images, index) in images" :key="index" class="dot" :class="{ active: currentSlide === index }" @click="goToSlide(index)"></span>
       </div>
     </div>
   </div>
 </template>
 
 
-<script setup lang="ts">
 
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+// Image array for the carousel
+const images = ref([
+  new URL('../assets/images/eisley1.JPG', import.meta.url).href,
+  new URL('../assets/images/eisley2.JPG', import.meta.url).href,
+  new URL('../assets/images/eisley3.JPG', import.meta.url).href,
+]);
+
+// Reactive state for current slide
+const currentSlide = ref(0);
+let carouselInterval: ReturnType<typeof setInterval> | null = null;
+
+// Function to change the slide automatically every 10 seconds
+const startCarousel = () => {
+  carouselInterval = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % images.value.length;
+  }, 10000); // 10 seconds
+};
+
+// Stop the carousel when component is destroyed
+onBeforeUnmount(() => {
+  if (carouselInterval) clearInterval(carouselInterval);
+});
+
+// Start the carousel when the component is mounted
+onMounted(() => {
+  startCarousel();
+});
+
+// Manually go to a specific slide
+const goToSlide = (index: number) => {
+  currentSlide.value = index;
+  if (carouselInterval) clearInterval(carouselInterval); // Restart the timer
+  startCarousel();
+};
 </script>
+
 
 <style scoped>
 .hero {
@@ -97,6 +150,56 @@
 .btn-secondary:hover {
   background-color: #007bff;
   color: #fff;
+}
+
+/* Carousel Section */
+.carousel-section {
+  width: 100%;
+  padding: 2rem 0;
+  background-color: #f5f5f5; /* Light background to separate from hero */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: calc(100% * var(--carousel-image-count)); /* Dynamic width based on image count */
+  max-width: 1200px;
+  overflow: hidden;
+}
+
+.carousel-item {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 400px; /* Adjust this height as needed */
+  object-fit: cover;
+}
+
+/* Dots below the carousel */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #007bff;
 }
 
 /* Media Queries */
