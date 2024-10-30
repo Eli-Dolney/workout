@@ -15,64 +15,87 @@
       </div>
     </div>
 
-    <!-- Carousel Section -->
+    <!-- Multi-Container Carousel Section -->
     <div class="carousel-section">
-      <div class="carousel-inner" :style="{ transform: `translateX(-${currentSlide * 100}%)`, '--carousel-image-count': images.length }">
-        <div class="carousel-item" v-for="(image, index) in images" :key="index">
-          <img :src="image" alt="Carousel Image" />
+      <div class="carousel-container">
+        <div class="carousel-content">
+          <img :src="trainingImages[currentTrainingSlide]" alt="Training Programs" />
+          <p>TRAINING PROGRAMS</p>
         </div>
       </div>
-      <!-- Dots to navigate through images -->
-      <div class="carousel-dots">
-        <span v-for="(images, index) in images" :key="index" class="dot" :class="{ active: currentSlide === index }" @click="goToSlide(index)"></span>
+      <div class="carousel-container">
+        <div class="carousel-content">
+          <img :src="apparelImages[currentApparelSlide]" alt="TSB Apparel" />
+          <p>My APPAREL</p>
+        </div>
+      </div>
+      <div class="carousel-container">
+        <div class="carousel-content">
+          <img :src="coachingImages[currentCoachingSlide]" alt="Online Coaching" />
+          <p>ONLINE COACHING</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-
-
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-// Image array for the carousel
-const images = ref([
-  new URL('../assets/images/eisley1.JPG', import.meta.url).href,
-  new URL('../assets/images/eisley2.JPG', import.meta.url).href,
-  new URL('../assets/images/eisley3.JPG', import.meta.url).href,
+// Image arrays for each section
+const trainingImages = ref([
+  new URL('../assets/images/eisley1.jpg', import.meta.url).href,
+  new URL('../assets/images/eisley2.jpg', import.meta.url).href,
+  new URL('../assets/images/eisley3.jpg', import.meta.url).href,
 ]);
 
-// Reactive state for current slide
-const currentSlide = ref(0);
-let carouselInterval: ReturnType<typeof setInterval> | null = null;
+const apparelImages = ref([
+  new URL('../assets/images/eisley1.jpg', import.meta.url).href,
+  new URL('../assets/images/eisley2.jpg', import.meta.url).href,
+  new URL('../assets/images/eisley3.jpg', import.meta.url).href,
+]);
 
-// Function to change the slide automatically every 10 seconds
+const coachingImages = ref([
+  new URL('../assets/images/eisley1.jpg', import.meta.url).href,
+  new URL('../assets/images/eisley2.jpg', import.meta.url).href,
+  new URL('../assets/images/eisley3.jpg', import.meta.url).href,
+]);
+
+// Slide indices for each container
+const currentTrainingSlide = ref(0);
+const currentApparelSlide = ref(0);
+const currentCoachingSlide = ref(0);
+
+// Set intervals for each container to cycle through images
+let trainingInterval: ReturnType<typeof setInterval> | null = null;
+let apparelInterval: ReturnType<typeof setInterval> | null = null;
+let coachingInterval: ReturnType<typeof setInterval> | null = null;
+
 const startCarousel = () => {
-  carouselInterval = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % images.value.length;
-  }, 10000); // 10 seconds
+  trainingInterval = setInterval(() => {
+    currentTrainingSlide.value = (currentTrainingSlide.value + 1) % trainingImages.value.length;
+  }, 10000);
+
+  apparelInterval = setInterval(() => {
+    currentApparelSlide.value = (currentApparelSlide.value + 1) % apparelImages.value.length;
+  }, 10000);
+
+  coachingInterval = setInterval(() => {
+    currentCoachingSlide.value = (currentCoachingSlide.value + 1) % coachingImages.value.length;
+  }, 10000);
 };
 
-// Stop the carousel when component is destroyed
+onMounted(startCarousel);
+
 onBeforeUnmount(() => {
-  if (carouselInterval) clearInterval(carouselInterval);
+  if (trainingInterval) clearInterval(trainingInterval);
+  if (apparelInterval) clearInterval(apparelInterval);
+  if (coachingInterval) clearInterval(coachingInterval);
 });
-
-// Start the carousel when the component is mounted
-onMounted(() => {
-  startCarousel();
-});
-
-// Manually go to a specific slide
-const goToSlide = (index: number) => {
-  currentSlide.value = index;
-  if (carouselInterval) clearInterval(carouselInterval); // Restart the timer
-  startCarousel();
-};
 </script>
 
-
 <style scoped>
+/* Hero Section */
 .hero {
   background: url('../assets/images/eisleymain.jpg') no-repeat center center;
   background-size: cover;
@@ -83,16 +106,6 @@ const goToSlide = (index: number) => {
   justify-content: center;
   height: 100vh;
   position: relative;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  
 }
 
 .hero-content {
@@ -128,99 +141,46 @@ const goToSlide = (index: number) => {
 .btn-primary {
   background-color: #007bff;
   color: #fff;
-  border: none;
   padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
 }
 
 .btn-secondary {
   background-color: #fff;
   color: #007bff;
-  border: 1px solid #007bff;
   padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.btn-secondary:hover {
-  background-color: #007bff;
-  color: #fff;
 }
 
 /* Carousel Section */
 .carousel-section {
-  width: 100%;
+  display: flex;
+  justify-content: space-around;
   padding: 2rem 0;
-  background-color: #f5f5f5; /* Light background to separate from hero */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: #f5f5f5;
 }
 
-.carousel-inner {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: calc(100% * var(--carousel-image-count)); /* Dynamic width based on image count */
-  max-width: 1200px;
+.carousel-container {
+  width: 30%;
+  border-radius: 8px;
   overflow: hidden;
+  position: relative;
+  text-align: center;
 }
 
-.carousel-item {
+.carousel-content img {
   width: 100%;
-  flex-shrink: 0;
-}
-
-.carousel-item img {
-  width: 100%;
-  height: 400px; /* Adjust this height as needed */
+  height: 300px;
   object-fit: cover;
 }
 
-/* Dots below the carousel */
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.dot {
-  height: 12px;
-  width: 12px;
-  margin: 0 4px;
-  background-color: #ccc;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-}
-
-.dot.active {
-  background-color: #007bff;
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-content {
-    max-width: 100%;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
+.carousel-content p {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  font-size: 1.2rem;
 }
 </style>

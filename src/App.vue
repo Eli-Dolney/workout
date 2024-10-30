@@ -3,7 +3,10 @@
     <header>
       <nav>
         <div class="nav-left">
-          <router-link to="/" class="brand">EisleyFit</router-link>
+          <router-link to="/" class="brand">
+            <span class="brand-text">EisleyFit</span>
+            <i class="fa-solid fa-home brand-icon"></i>
+          </router-link>
         </div>
 
         <!-- Desktop Navigation Links -->
@@ -52,11 +55,10 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import SocialMediaSidebar from './components/SocialMediaSidebar.vue';
-import Footer from './views/Footer.vue'; 
+import Footer from './views/Footer.vue';
 
 const menuOpen = ref(false);
 
@@ -64,8 +66,6 @@ const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 </script>
-
-
 
 <style scoped>
 /* Basic Reset */
@@ -97,6 +97,40 @@ nav {
   position: relative;
 }
 
+/* Brand/Logo Styling */
+.brand {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff0000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.brand-text {
+  transition: opacity 0.3s ease;
+}
+
+.brand-icon {
+  display: none;
+  font-size: 2rem;
+  color: #ff0000;
+  position: absolute;
+  left: 0;
+  transition: opacity 0.3s ease;
+}
+
+.brand:hover .brand-text {
+  opacity: 0;
+}
+
+.brand:hover .brand-icon {
+  display: block;
+  opacity: 1;
+}
+
 /* Desktop Navigation */
 .nav-center-desktop {
   display: flex;
@@ -119,6 +153,7 @@ nav {
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
+  transition: color 0.3s;
 }
 
 .nav-center-desktop ul li a:hover {
